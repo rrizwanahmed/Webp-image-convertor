@@ -1,4 +1,7 @@
 @echo off
+rem ###################################
+rem Place this script in directory of images you want convert and run in DOS shell. (Webp-batch-converter.bat)
+rem ###################################
 rem ***	quality factor (0:small..100:big), default=75	***
 set QUAL=-q 75
 rem ***	transparency-compression quality (0..100), default=100	***
