@@ -1,7 +1,7 @@
 @echo off
-rem ###################################
-rem Place this script in directory of images you want convert and run in DOS shell. (Webp-batch-converter.bat)
-rem ###################################
+
+set tout=C:\Windows\System32\timeout.exe
+rem set WEBP=C:\DosCommands\cwebp.exe
 rem ***	quality factor (0:small..100:big), default=75	***
 set QUAL=-q 75
 rem ***	transparency-compression quality (0..100), default=100	***
@@ -33,14 +33,13 @@ rem *** -alpha_method <int> Specify the algorithm used for alpha compression: 0 
 set AMETH=-alpha_method 1
 rem ***	-alpha_filter <string> . predictive filtering for alpha plane, one of: none, fast(default) or best	***
 set AFILT=-alpha_filter best
-rem *** 
 rem ***	Add any Word at the END of File Name if required	***
 set EMBED=-Webp
 
 setlocal enableDelayedExpansion
 
-for %%v in (*.jpg,*.jpeg,*.png,*.tiff,*.tif) do @echo Converting file %%v && cwebp %PRE% %SNS% %FIL_STR% %COMP% %TRAN% %P_QUAL% %AFILT% %AMETH% -mt %LMEM% -exact %SEG% %PAR_LIM% -af %QUAL% -progress -short "%%v" -o "%%~nv"%EMBED%.webp && for /f "delims=" %%i in ('pwd') do echo Saving %%~nv%EMBED%.webp file in "%%i" directory
-rem OLD LINE
-rem for %%v in (*.jpg,*.jpeg,*.png,*.tiff,*.tif) do @echo Converting file %%v && cwebp %SNS% %QUAL% %COMP% %TRAN% %P_QUAL% -mt -exact -af -short -progress "%%v" -o "%%~nv"%EMBED%.webp
+echo Converting FILENAME "%~nx1"
 
-timeout 10
+cwebp %PRE% %SNS% %FIL_STR% %COMP% %TRAN% %P_QUAL% %AFILT% %AMETH% -mt %LMEM% -exact %SEG% %PAR_LIM% -af %QUAL% -progress -short "%~f1" -o "%~dpn1%EMBED%.webp" && echo Saving "%~n1%EMBED%.webp" file in "%~dp1" directory
+
+%tout% /t 5 /nobreak
